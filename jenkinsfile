@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git checkout') {
+            steps {
+                echo 'cloning repository'
+                git branch: 's8tia', changelog: false, poll: false, url: 'https://github.com/DEL-ORG/s8-web-2.git'
+            }
+        }
+        stage('build docker image') {
+            steps {
+                sh 'docker build -t s5carles/kinga:0.02 -f application-02.Dockerfile .'
+                sh 'docker images'
+                sh 'docker run -d -p 6602:80 s5carles/kinga:0.02'
+                sh 'docker ps'
+            }
+        }
+        stage('push to docker hub') {
+            steps{
+                sh 'docker login -u s5carles -p Angecalais97'
+                sh 'docker push s5carles/kinga:0.02'
+            }
+        }
+    }
+}
