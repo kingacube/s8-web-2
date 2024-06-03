@@ -10,9 +10,9 @@ pipeline {
         }
         stage('build docker image') {
             steps {
-                sh 'docker build -t s5carles/kinga:0.02 -f application-02.Dockerfile .'
+                sh 'docker build -t s5carles/kinga:0.02-f application-02.Dockerfile .'
                 sh 'docker images'
-                sh 'docker run -d -p 6602:80 s5carles/kinga:0.02'
+                sh 'docker run -d -p 6677:80 s5carles/kinga:0.02'
                 sh 'docker ps'
             }
         }
